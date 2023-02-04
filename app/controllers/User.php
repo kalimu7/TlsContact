@@ -21,7 +21,17 @@
             $travel_items = array(
                 'id' => $id,
                 'Firstname' => $Firstname,
-                'Lastname' => $Lastname
+                'Lastname' => $Lastname,
+                //dateofbirth`, `nationality`, `family status`, `address`, `visatype`,`Dateofdeparture`, `Date of arrival`, `traveldocumenttype`, `traveldocumentnumber`, `Referencenumber
+                'dateofbirth'=>$dateofbirth,
+                'family status'=>$familystatus,
+                'address'=>$address,
+                'visatype'=>$visatype,
+                'Dateofdeparture'=>$Dateofdeparture,
+                'Date of arrival'=>$Dateofarrival,
+                'traveldocumenttype'=>$traveldocumenttype,
+                'traveldocumentnumber'=>$traveldocumentnumber,
+                'Referencenumber'=>$Referencenumber
             );
             array_push($travel_arr['data'],$travel_items);
 
@@ -47,8 +57,18 @@
         $data = json_decode(file_get_contents("php://input"));
         $Firstname = $data->Firstname;
         $Lastname = $data->Lastname;
+        $Dobirth = $data->Dobirth;
+        $Nationality = $data->Nationality;
+        $Fstatus = $data->Fstatus;
+        $Address = $data->Address;
+        $Vtype = $data->Vtype;
+        $Dodeparture = $data->Dodeparture;
+        $Doarrival = $data->Doarrival;
+        $Tdtype = $data->Tdtype;
+        $Tdnumber = $data->Tdnumber;
+        
         $model = $this->model('Users');
-        if($model->create($Firstname,$Lastname) ){
+        if($model->create($Firstname,$Lastname,$Dobirth,$Nationality,$Fstatus,$Address,$Vtype,$Dodeparture,$Doarrival,$Tdtype,$Tdnumber)){
             echo 'added successfully';
         }
 
@@ -95,11 +115,14 @@
         $id = $data->id;
         $ddr = $data->ddr;
         $model = $this->model('Users');
-        if($model->book($ddr,$id) == 1){
-            echo 'booked successfully';
+        $num = $model->validate($ddr);
+        if($num<=0){
+            $model->book($ddr,$id);
+            echo'booked successfully';
         }else{
-            echo 'you cant do the booking';
+            echo 'this date isnt available';
         }
+           
     }
 
 
