@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import '../style/Form.css';
 import InputGroup from 'react-bootstrap/InputGroup';
+import axios from 'axios';
 function Form() {
     // array of countries
     const countryList = [
@@ -265,17 +266,19 @@ function Form() {
         )
     })
     const [Firstname,SetFirstname] = useState(''); 
-    const [Lastname,SetFirstname] = useState(''); 
-    const [Dobirth,SetFirstname] = useState(''); 
-    const [Nationality,SetFirstname] = useState(''); 
-    const [Firstname,SetFirstname] = useState(''); 
-    const [Firstname,SetFirstname] = useState(''); 
-    const [Firstname,SetFirstname] = useState(''); 
-    const [Firstname,SetFirstname] = useState(''); 
-    const [Firstname,SetFirstname] = useState(''); 
-    const [Firstname,SetFirstname] = useState(''); 
+    const [Lastname,SetLastname] = useState(''); 
+    
     const handlesubmit = (e)=>{
-
+        e.preventDefault();
+        // console.log(Firstname,Lastname);
+        axios.post('http://localhost/TlsContact/public/User/Add',{
+            Firstname,
+            Lastname
+        }).then((res)=>{
+            console.log('successfully');
+        }).catch((err)=>{
+            console.log(err);
+        })
     }
     // array of countries
   return (
@@ -284,14 +287,14 @@ function Form() {
             <h2 className='text-white display-1'>Créez votre compte <br /> TLScontact</h2>
         </div>
         <div className="container forcont d-flex justify-content-center align-items-center">
-        <form method='POST' action='http://localhost/TlsContact/public/User/Add' className='py-5'>
+        <form  className='py-5'>
                 <div class="mb-3">
                     <label for="exampleInputEmail1" class="form-label">First Name</label>
-                    <input type="text" name='Firstname' class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"/>
+                    <input onChange={(e)=>SetFirstname(e.target.value)} type="text" name='Firstname' class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"/>
                 </div>
                 <div class="mb-3">
                     <label for="exampleInputEmail1" class="form-label">Last Name</label>
-                    <input type="text" name='Lastname' class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"/>
+                    <input type="text" onChange={(e)=>SetLastname(e.target.value)} name='Lastname' class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"/>
                 </div>
                 <div class="mb-3">
                     <label for="exampleInputPassword1" class="form-label">Date of birth</label>
