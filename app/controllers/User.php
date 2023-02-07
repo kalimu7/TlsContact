@@ -48,6 +48,8 @@
     }
 
     public function add(){
+        // die( print_r($_POST));
+        
         ini_set('display_errors', 1);
         header("Access-Control-Allow-Origin: *");
         header("Content-type: application/json; charset=utf-8");

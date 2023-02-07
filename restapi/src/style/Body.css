@@ -1,0 +1,32 @@
+.conimg{
+    background-size: cover;
+    background-position: center bottom;
+    background-image: url('../assets/prs.jpg');
+    height: calc(100vh - 76px);
+    background-color: rgba(0, 0, 0, 0.5);
+}
+.prr,.ttl{
+    color: #003d77;
+}
+.enre{
+    padding: 60px;
+    
+    /* position: fixed; */
+    /* top: -90px; */
+}
+.enrr{
+    box-shadow: -6px 12px 20px 0px rgba(0,0,0,0.75);
+-webkit-box-shadow: -6px 12px 20px 0px rgba(0,0,0,0.75);
+-moz-box-shadow: -6px 12px 20px 0px rgba(0,0,0,0.75);
+}
+.para{
+    /* width: 800px; */
+    margin-top: 20px;
+}
+.enrbtn{
+    color: #003d77;
+}
+.enrbtn:hover{
+    background-color: #003d77;
+    color: white;
+}

@@ -1,0 +1,25 @@
+.bigtitle{
+    height: 500px;
+    background-color: #003d77;
+}
+.forcont{
+    padding: 0 100px;
+    background-color: #f0f4f7;
+    width: fit-content;
+    box-shadow: -6px 14px 5px 0px rgba(0,0,0,0.75);
+    -webkit-box-shadow: -6px 14px 5px 0px rgba(0,0,0,0.75);
+    -moz-box-shadow: -6px 14px 5px 0px rgba(0,0,0,0.75);
+    margin-top: -90px;
+    border-radius: 20px;
+    margin-bottom: 20px;
+    /* position: relative; */
+}
+.forcont input,select,option{
+    width: 400px !important;
+}
+@media screen and (max-width:400px) {
+    .forcont input,select,option{
+        width: 300px !important;
+    }
+}
+
