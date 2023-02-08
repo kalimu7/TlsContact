@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState } from 'react';
 import '../style/Form.css';
 import InputGroup from 'react-bootstrap/InputGroup';
 import axios from 'axios';
@@ -265,17 +265,22 @@ function Form() {
                 
         )
     })
-    const [Firstname,SetFirstname] = useState(''); 
-    const [Lastname,SetLastname] = useState(''); 
+    const [Inputs,SetInputs] = useState({Firstname:"",Lastname:"",Dobirth:"",Nationality:"",Fstatus:"",Address:"",Vtype:"",Dodeparture:"",Doarrival:"",Tdtype:"",Tdnumber:""}); 
+    const handlechange = (event)=>{
+        SetInputs({...Inputs,[event.target.name]:event.target.value })
+    };
     
     const handlesubmit = (e)=>{
         e.preventDefault();
-        // console.log(Firstname,Lastname);
-        axios.post('http://localhost/TlsContact/public/User/Add',{
-            Firstname,
-            Lastname
-        }).then((res)=>{
-            console.log('successfully');
+        // console.log(Inputs);
+        axios.post('http://localhost/TlsContact/public/User/add',Inputs, {
+            headers: {
+                "Access-Control-Allow-Origin": "*",
+            }}
+        
+        ).then((res)=>{
+            
+            console.log('added successfully');
         }).catch((err)=>{
             console.log(err);
         })
@@ -284,67 +289,69 @@ function Form() {
   return (
     <div>
         <div className="bigtitle d-flex justify-content-center align-items-center text-center  ">
-            <h2 className='text-white display-1'>Créez votre compte <br /> TLScontact</h2>
+            <h2 className='text-white display-1'>Se connecter à votre compte<br /> TLScontact</h2>
         </div>
         <div className="container forcont d-flex justify-content-center align-items-center">
-        <form  className='py-5'>
+        <form   className='py-5'>
                 <div class="mb-3">
                     <label for="exampleInputEmail1" class="form-label">First Name</label>
-                    <input onChange={(e)=>SetFirstname(e.target.value)} type="text" name='Firstname' class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"/>
+                    <input onChange={handlechange} type="text" name='Firstname' class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"/>
                 </div>
                 <div class="mb-3">
                     <label for="exampleInputEmail1" class="form-label">Last Name</label>
-                    <input type="text" onChange={(e)=>SetLastname(e.target.value)} name='Lastname' class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"/>
+                    <input type="text" onChange={handlechange} name='Lastname' class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"/>
                 </div>
                 <div class="mb-3">
                     <label for="exampleInputPassword1" class="form-label">Date of birth</label>
-                    <input type="date" name='Dobirth' class="form-control" id="exampleInputPassword1" />
+                    <input onChange={handlechange} type="date" name='Dobirth' class="form-control" id="exampleInputPassword1" />
                 </div>
                 <div class="mb-3">
                     <label for="exampleInputPassword1" class="form-label">Nationality</label> <br />
-                    <select   name='Nationality' class="form-select form-select-sm" aria-label=".form-select-sm example" >
+                    <select onChange={handlechange}  name='Nationality' class="form-select form-select-sm" aria-label=".form-select-sm example" >
                     <option selected>pick a country please</option>
                     {arr}
                     </select>
                 </div>
                 <div class="mb-3">
                     <label for="exampleInputPassword1" class="form-label">Family Status</label> 
-                    <select  name='Fstatus' class="form-select form-select-sm" aria-label=".form-select-sm example" >
-                        <option >Single</option>
-                        <option >Married</option>
-                        <option >Divorced</option>
+                    <select onChange={handlechange} name='Fstatus' class="form-select form-select-sm" aria-label=".form-select-sm example" >
+                        <option selected value="single" >Single</option>
+                        <option value="Married">Married</option>
+                        <option value="Divorced">Divorced</option>
                     </select>
                 </div>
                 <div class="mb-3">
                     <label for="exampleInputPassword1" class="form-label">Adress</label>
-                    <input type="text" name='Address' class="form-control" id="exampleInputPassword1" />
+                    <input type="text" onChange={handlechange} name='Address' class="form-control" id="exampleInputPassword1" />
                 </div>
                 <div class="mb-3">
                     <label for="exampleInputPassword1" class="form-label">Visa Type</label>
-                    <select name="Vtype" class="form-select form-select-sm" aria-label=".form-select-sm example" >
-                        <option >Tourism</option>
-                        <option >Student</option>
-                        <option >Temporary worker</option>
+                    <select onChange={handlechange} name="Vtype" class="form-select form-select-sm" aria-label=".form-select-sm example" >
+                        <option selected value="Tourism" >select</option>
+                        <option  value="Tourism" >Tourism</option>
+                        <option value="Student">Student</option>
+                        <option value="Temporary worker">Temporary worker</option>
                     </select>
                 </div>
                 <div class="mb-3">
                     <label for="exampleInputPassword1" class="form-label">Date Of departure</label>
-                    <input type="date" name='Dodeparture' class="form-control" id="exampleInputPassword1" />
+                    <input onChange={handlechange} type="date" name='Dodeparture' class="form-control" id="exampleInputPassword1" />
                 </div>
                 <div class="mb-3">
                     <label for="exampleInputPassword1" class="form-label">Date Of Arrival</label>
-                    <input type="date" name='Doarrival' class="form-control" id="exampleInputPassword1" />
+                    <input onChange={handlechange} type="date" name='Doarrival' class="form-control" id="exampleInputPassword1" />
                 </div>
                 <div class="mb-3">
                     <label for="exampleInputPassword1" class="form-label">Travel Documentary Type</label>
-                    <select name="Tdtype" class="form-select form-select-sm" aria-label=".form-select-sm example" >
-                        <option >Passport</option>
-                        <option >identity document</option>
+                    <select onChange={handlechange} name="Tdtype" class="form-select form-select-sm" aria-label=".form-select-sm example" >
+                        <option selected value="Passport">Select</option>
+                        <option selected value="Passport">Passport</option>
+                        <option value="idntity document">identity document</option>
                     </select>
                 </div>
                 <div class="mb-3">
                     <label for="exampleInputPassword1" class="form-label">Travel Documentary Number</label>
-                    <input type="text" name='Tdnumber' class="form-control" id="exampleInputPassword1" />
+                    <input onChange={handlechange} type="text" name='Tdnumber' class="form-control" id="exampleInputPassword1" />
                 </div>
         
                 <div className='d-flex justify-content-center'>

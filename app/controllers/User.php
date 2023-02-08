@@ -1,7 +1,22 @@
 <?php
 
     require_once '../app/core/Controller.php';
-    header("Access-Control-Allow-Origin: *");
+
+    header('Access-Control-Allow-Origin: *');
+    header('Content-Type: application/json');
+    header('Access-Control-Allow-Methods: GET , POST , PUT , DELETE');
+    header('Access-Control-Allow-Headers: Access-Control-Allow-Headers,Content-Type,Access-Control-Allow-Headers, Authorization, X-Requested-Width');
+
+    //traitement data
+    if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
+        if (isset($_SERVER['HTTP_ACCESS_CONTROL_REQUEST_METHOD']))
+            header("Access-Control-Allow-Methods: GET, POST, OPTIONS, PUT, DELETE");
+        if (isset($_SERVER['HTTP_ACCESS_CONTROL_REQUEST_HEADERS']))
+            header("Access-Control-Allow-Headers: {$_SERVER['HTTP_ACCESS_CONTROL_REQUEST_HEADERS']}");
+    }
+    if ($_SERVER["REQUEST_METHOD"] == "OPTIONS") {
+        return true;
+    }
 
     class user extends Controller{
         public function read(){
@@ -51,11 +66,23 @@
 
     public function add(){
         // die( print_r($_POST));
-        ini_set('display_errors', 1);
-        header("Access-Control-Allow-Origin: *");
-        header("Content-type: application/json; charset=utf-8");
-        header("Access-Control-Allow-Methods:POST");
-        header("Access-Control-Allow-Headers:Access-Control-Allow-Origin,Content-type: application/json;    charset=utf-8,Access-Control-Allow-Methods,Authorization,X-Requested-With");
+    ini_set('display_errors', 1);
+    header('Access-Control-Allow-Origin: *');
+    header('Content-Type: application/json');
+    header('Access-Control-Allow-Methods: GET , POST , PUT , DELETE');
+    header('Access-Control-Allow-Headers: Access-Control-Allow-Headers,Content-Type,Access-Control-Allow-Headers, Authorization, X-Requested-Width');
+
+    //traitement data
+    if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
+        if (isset($_SERVER['HTTP_ACCESS_CONTROL_REQUEST_METHOD']))
+            header("Access-Control-Allow-Methods: GET, POST, OPTIONS, PUT, DELETE");
+        if (isset($_SERVER['HTTP_ACCESS_CONTROL_REQUEST_HEADERS']))
+            header("Access-Control-Allow-Headers: {$_SERVER['HTTP_ACCESS_CONTROL_REQUEST_HEADERS']}");
+    }
+    if ($_SERVER["REQUEST_METHOD"] == "OPTIONS") {
+        return true;
+    }
+    
         
         $data = json_decode(file_get_contents("php://input"));
         $Firstname = $data->Firstname;
@@ -73,6 +100,8 @@
         $model = $this->model('Users');
         if($model->create($Firstname,$Lastname,$Dobirth,$Nationality,$Fstatus,$Address,$Vtype,$Dodeparture,$Doarrival,$Tdtype,$Tdnumber)){
             echo 'added successfully';
+        }else{
+            echo 'failed';
         }
 
     }

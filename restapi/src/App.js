@@ -3,12 +3,14 @@ import Body from './Componets/Body.jsx';
 import Footer from './Componets/Footer.jsx';
 import Form from './Componets/Form.jsx';
 import { Route, Routes } from 'react-router';
+import Formlogin from './Componets/Formlogin.jsx';
 function App() {
   return (
     <>
         <Navbar />
       <div className="App">
         <Routes>
+          <Route path='/connecter' element={<Formlogin />} />
           <Route path="/"  element={<Body />} />
           <Route path="/enregistrer"  element={<Form />} />
         </Routes>
