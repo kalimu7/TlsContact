@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import '../style/Form.css';
-import InputGroup from 'react-bootstrap/InputGroup';
+
+// import InputGroup from 'react-bootstrap/InputGroup';
 import axios from 'axios';
 function Form() {
     // array of countries
@@ -255,7 +256,7 @@ function Form() {
         "Zimbabwe",
         "Åland Islands"
     ];
-    let natinput = document.querySelector('#nationality');
+    
     const arr = countryList.map((country,index)=>{
         return(
                 
@@ -270,6 +271,7 @@ function Form() {
         SetInputs({...Inputs,[event.target.name]:event.target.value })
     };
     
+   
     const handlesubmit = (e)=>{
         e.preventDefault();
         // console.log(Inputs);
@@ -277,9 +279,8 @@ function Form() {
             headers: {
                 "Access-Control-Allow-Origin": "*",
             }}
-        
         ).then((res)=>{
-            
+            // window.location.href = 'http://localhost:3000/connecter';
             console.log('added successfully');
         }).catch((err)=>{
             console.log(err);
@@ -289,7 +290,7 @@ function Form() {
   return (
     <div>
         <div className="bigtitle d-flex justify-content-center align-items-center text-center  ">
-            <h2 className='text-white display-1'>Se connecter à votre compte<br /> TLScontact</h2>
+        <h2 className='text-white display-1'>Créez votre compte <br /> TLScontact</h2>
         </div>
         <div className="container forcont d-flex justify-content-center align-items-center">
         <form   className='py-5'>

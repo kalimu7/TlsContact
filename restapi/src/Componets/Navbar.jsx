@@ -42,10 +42,13 @@ function Navbar() {
             <div class="collapse navbar-collapse justify-content-end " id="navbarNav" >
                 <ul class="navbar-nav">
                 <li class="nav-item active">
-                    <a class="nav-link   mx-2 rounded-pill" style={{color:'#003d77',border:'2px solid #003d77',borderRaduis:'50px !important' }} href="#">Home</a>
+                    <Link class="nav-link   mx-2 rounded-pill" style={{color:'#003d77',border:'2px solid #003d77',borderRaduis:'50px !important' }} to="/Res">Reserver</Link>
+                </li>
+                <li class="nav-item active">
+                    <Link class="nav-link   mx-2 rounded-pill" style={{color:'#003d77',border:'2px solid #003d77',borderRaduis:'50px !important' }} to="/">Home</Link>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link  mx-2 rounded-pill" style={{color:'#003d77',border:'2px solid #003d77',borderRaduis:'50px !important' }} href="#">se connecter</a>
+                    <Link class="nav-link  mx-2 rounded-pill" style={{color:'#003d77',border:'2px solid #003d77',borderRaduis:'50px !important' }} to="/connecter">se connecter</Link>
                 </li>
                 <li class="nav-item">
                     <Link class="nav-link mx-2 rounded-pill" style={{color:'#003d77',border:'2px solid #003d77',borderRaduis:'50px !important' }} to="enregistrer">S'ENREGISTRER</Link>

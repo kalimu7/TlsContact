@@ -50,27 +50,36 @@
             $stm->execute();
             return true;
         }
-        public function validate($ddr){
+        public function validate($ddr,$ddt){
             $conn = $this->connect();
-            $stm = $conn->prepare(" SELECT * FROM `reservation` WHERE datedereservation = :ddr ");
+            $stm = $conn->prepare(" SELECT * FROM `reservation` WHERE datedereservation = :ddr And  time = :ddt ");
             $stm->BindParam(':ddr',$ddr);
+            $stm->BindParam(':ddt',$ddt);
             $stm->execute();
             $stm->fetch();
             $num = $stm->rowCount();
             return $num;
         }
-        public function book($ddr,$id){
-
+        public function book($ddr,$ddt,$id){
+            
             $conn = $this->connect();
-            $stm = $conn->prepare('INSERT INTO `reservation` (`datedereservation`,`iduser`) VALUES( :ddr , :id ) ');
+            $stm = $conn->prepare('INSERT INTO `reservation` (`datedereservation`,`iduser`,`time`) VALUES( :ddr , :id , :ddt ) ');
             $stm->BindParam(':ddr',$ddr);
             $stm->BindParam(':id',$id);
+            $stm->BindParam(':ddt',$ddt);
             $check = $stm->execute();
             if($check){
                 return 1;
             }else{
                 return 2;
             }
+        }
+        public function getmax(){
+            $conn = $this->connect();
+            $stm = $conn->prepare('SELECT MAX(id) FROM user');
+            $stm->execute();
+            $num = $stm->fetch();
+            return $num['MAX(id)'];
         }
 
     }
