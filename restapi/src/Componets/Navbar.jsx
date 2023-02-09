@@ -42,7 +42,7 @@ function Navbar() {
             <div class="collapse navbar-collapse justify-content-end " id="navbarNav" >
                 <ul class="navbar-nav">
                 <li class="nav-item active">
-                    <Link class="nav-link   mx-2 rounded-pill" style={{color:'#003d77',border:'2px solid #003d77',borderRaduis:'50px !important' }} to="/Res">Reserver</Link>
+                    {/* <Link class="nav-link   mx-2 rounded-pill" style={{color:'#003d77',border:'2px solid #003d77',borderRaduis:'50px !important' }} to="/Res">Reserver</Link> */}
                 </li>
                 <li class="nav-item active">
                     <Link class="nav-link   mx-2 rounded-pill" style={{color:'#003d77',border:'2px solid #003d77',borderRaduis:'50px !important' }} to="/">Home</Link>

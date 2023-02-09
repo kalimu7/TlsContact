@@ -280,7 +280,7 @@ function Form() {
                 "Access-Control-Allow-Origin": "*",
             }}
         ).then((res)=>{
-            // window.location.href = 'http://localhost:3000/connecter';
+            window.location.href = 'http://localhost:3000/Res';
             console.log('added successfully');
         }).catch((err)=>{
             console.log(err);

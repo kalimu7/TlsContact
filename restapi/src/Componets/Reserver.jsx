@@ -7,15 +7,16 @@ import '../style/Reserver.css';
 
 
 function Reserver() {
-    var msg='' ;
+    
     const [ddr,SetDays] = useState('');
     const [ddt,SetHours] = useState('');
+    const [msg,setmsg] = useState('');
     const handlesubmitt = (e)=>{
         e.preventDefault();
         axios.post('http://localhost/TlsContact/public/User/reserver',{ddr,ddt})
         .then((res)=>{
             console.log(res.data);
-            return res
+            setmsg(res.data);
             
         }).catch((err)=>{
             console.log(err);
@@ -27,14 +28,14 @@ function Reserver() {
   return (
     <div>
         <div className="bigtittle d-flex justify-content-center align-items-center text-center  ">
-                    <span className='text-danger'>{msg}</span>
+                
                     <h2 className='text-white display-1'> réserver votre rendez-vous<br /> TLScontact</h2>
         </div>
         <div className="container forcontt d-flex justify-content-center align-items-center">
         <form   className='py-5'>
                 
                 <div class="mb-3">
-                    <label for="exampleInputEmail1" class="form-label">Select day</label>
+                <span className='text-danger'>{msg}</span>
                     <input onChange={(e)=>SetDays(e.target.value)} type="date" name='day' class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"/>
                 </div>
                 <div class="mb-3">
