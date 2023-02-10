@@ -81,6 +81,14 @@
             $num = $stm->fetch();
             return $num['MAX(id)'];
         }
+        public function fetchrefid($id){
+            $conn = $this->connect();
+            $stm = $conn->prepare('SELECT Referencenumber from user WHERE id = :id  ');
+            $stm->BindParam(':id',$id);
+            $stm->execute();
+            $ref = $stm->fetch();
+            return $ref['Referencenumber'];
+        }
 
     }
 

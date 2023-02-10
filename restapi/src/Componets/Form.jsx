@@ -271,7 +271,7 @@ function Form() {
         SetInputs({...Inputs,[event.target.name]:event.target.value })
     };
     
-   
+    const [ref,setref] = useState('');
     const handlesubmit = (e)=>{
         e.preventDefault();
         // console.log(Inputs);
@@ -280,8 +280,11 @@ function Form() {
                 "Access-Control-Allow-Origin": "*",
             }}
         ).then((res)=>{
+            console.log(res.data);
+            setref(res.data);
+            localStorage.setItem('ref',ref);
+            
             window.location.href = 'http://localhost:3000/Res';
-            console.log('added successfully');
         }).catch((err)=>{
             console.log(err);
         })
@@ -291,6 +294,7 @@ function Form() {
     <div>
         <div className="bigtitle d-flex justify-content-center align-items-center text-center  ">
         <h2 className='text-white display-1'>Créez votre compte <br /> TLScontact</h2>
+        <span className='text-primary' ></span>
         </div>
         <div className="container forcont d-flex justify-content-center align-items-center">
         <form   className='py-5'>

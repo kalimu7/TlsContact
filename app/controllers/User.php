@@ -98,9 +98,13 @@
         $Tdnumber = $data->Tdnumber;
         
         $model = $this->model('Users');
+        // *******fetch data***********
+        $idm = $model->getmax();
+        $id = $idm;
+        $ref = $model->fetchrefid($id);
+        
         if($model->create($Firstname,$Lastname,$Dobirth,$Nationality,$Fstatus,$Address,$Vtype,$Dodeparture,$Doarrival,$Tdtype,$Tdnumber)){
-            echo 'added successfully';
-            
+            echo $ref;
         }else{
             echo 'failed';
         }
@@ -160,12 +164,16 @@
         $ddt = $data->ddt;
         $model = $this->model('Users');
         $idm = $model->getmax();
+
         $id = $idm;
+        
         $num = $model->validate($ddr,$ddt);
         // $num = 0;
         if($num<=0){
             $model->book($ddr,$ddt,$id);
+            
             echo'booked successfully';
+
         }else{
             echo 'this date isnt available';
         }

@@ -53,6 +53,7 @@ function Navbar() {
                 <li class="nav-item">
                     <Link class="nav-link mx-2 rounded-pill" style={{color:'#003d77',border:'2px solid #003d77',borderRaduis:'50px !important' }} to="enregistrer">S'ENREGISTRER</Link>
                 </li>
+                
                 </ul>
             </div>
             </nav>
