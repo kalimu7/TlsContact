@@ -89,7 +89,14 @@
             $ref = $stm->fetch();
             return $ref['Referencenumber'];
         }
-
+        public function readonly($reference){
+            $conn = $this->connect();
+            $stm = $conn->prepare('SELECT * from user WHERE Referencenumber = :ref  ');
+            $stm->BindParam(':ref',$reference);
+            $stm->execute();
+            $row = $stm->fetch(PDO::FETCH_ASSOC);
+            return $row;
+        }
     }
 
 ?>

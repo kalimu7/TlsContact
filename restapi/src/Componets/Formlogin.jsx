@@ -1,7 +1,24 @@
-import React from 'react'
+import axios from 'axios';
+import React from 'react';
+import { useState } from 'react';
 import '../style/Formlogin.css';
 
 function Formlogin() {
+  const [ref,setreference] = useState('');
+  const handlesubmit = async (event)=>{
+    event.preventDefault();
+    await axios.post('http://localhost/TlsContact/public/User/update',{ref})
+     .then(res=>{
+      
+    
+
+
+    })
+    .catch(err=>{
+      console.log(err);
+    });
+  }
+
   return (
     <>
         <div className=" bigtitle d-flex justify-content-center align-items-center text-center  ">
@@ -10,12 +27,11 @@ function Formlogin() {
         <div className="container forcont d-flex justify-content-center align-items-center">
         <form   className='py-5'>
                 <div class="mb-3">
-                    <label for="exampleInputEmail1" class="form-label">First Name</label>
-                    <input  type="text" name='Firstname' class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"/>
+                    <label for="exampleInputEmail1" class="form-label">Reference Number:</label>
+                    <input  onChange={(e)=>setreference(e.target.value)} type="text" name='refe' class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"/>
                 </div>
-                <div class="mb-3">
-                    <label for="exampleInputEmail1" class="form-label">Last Name</label>
-                    <input type="text"  name='Lastname' class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"/>
+                <div class="mb-3 text-center">
+                <button type="submit" class="btn btn-primary rounded-pill px-5 py-2 " onClick={handlesubmit} > Submit</button>
                 </div>
                 
         </form>

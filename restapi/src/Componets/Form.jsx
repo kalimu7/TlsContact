@@ -272,17 +272,17 @@ function Form() {
     };
     
     const [ref,setref] = useState('');
-    const handlesubmit = (e)=>{
+     const handlesubmit =async (e)=>{
         e.preventDefault();
         // console.log(Inputs);
-        axios.post('http://localhost/TlsContact/public/User/add',Inputs, {
+        await axios.post('http://localhost/TlsContact/public/User/add',Inputs, {
             headers: {
                 "Access-Control-Allow-Origin": "*",
             }}
         ).then((res)=>{
             console.log(res.data);
-            setref(res.data);
-            localStorage.setItem('ref',ref);
+            // setref(res.data);
+            localStorage.setItem('ref',res.data);
             
             window.location.href = 'http://localhost:3000/Res';
         }).catch((err)=>{

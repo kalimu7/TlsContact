@@ -10,25 +10,25 @@ import 'bootstrap/js/dist/dropdown';
 import axios from 'axios';
 function Navbar() {
     
-    const [data,setData] = useState([]);
-    useEffect(()=>{
-        axios.get('http://localhost/TlsContact/public/User/read').then((res)=>{
-            setData(res.data.data)
-            console.log(res.data.data);
-        }
+    // const [data,setData] = useState([]);
+    // useEffect(()=>{
+    //     axios.get('http://localhost/TlsContact/public/User/read').then((res)=>{
+    //         setData(res.data.data)
+    //         console.log(res.data.data);
+    //     }
             
-            ).catch(err=>console.log(err));
+    //         ).catch(err=>console.log(err));
         
-    },[])
+    // },[])
     
-    const arr = data.map((data,index) => {
-        return(
-            <div key={index}>
-                <h3>{data.id}</h3>
-                <h3>{data.Firstname}</h3>
-            </div>
-        )
-    })
+    // const arr = data.map((data,index) => {
+    //     return(
+    //         <div key={index}>
+    //             <h3>{data.id}</h3>
+    //             <h3>{data.Firstname}</h3>
+    //         </div>
+    //     )
+    // })
   return (
     <div>
         
