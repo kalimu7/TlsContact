@@ -4,15 +4,17 @@ import { useState } from 'react';
 import '../style/Formlogin.css';
 
 function Formlogin() {
-  const [ref,setreference] = useState('');
+  const [ref,setreference] =  useState('');
   const handlesubmit = async (event)=>{
     event.preventDefault();
     await axios.post('http://localhost/TlsContact/public/User/update',{ref})
      .then(res=>{
       
-    
-
-
+      console.log(res.data);
+      localStorage.setItem('id',res.data.id);
+      localStorage.setItem('name',res.data.Firstname);
+      localStorage.setItem('lname',res.data.Lastname);
+      window.location.href = 'http://localhost:3000/Res';
     })
     .catch(err=>{
       console.log(err);

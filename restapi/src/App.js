@@ -5,16 +5,19 @@ import Form from './Componets/Form.jsx';
 import { Route, Routes } from 'react-router';
 import Formlogin from './Componets/Formlogin.jsx';
 import Reserver from './Componets/Reserver.jsx';
+import UserPlatform from './Componets/UserPlatform.jsx';
 function App() {
   return (
     <>
         <Navbar />
       <div className="App">
         <Routes>
+          
           <Route path='/Res' element={<Reserver />} />
           <Route path='/connecter' element={<Formlogin />} />
           <Route path="/"  element={<Body />} />
           <Route path="/enregistrer"  element={<Form />} />
+          <Route path="/user"  element={<UserPlatform />} />
         </Routes>
 
       </div>

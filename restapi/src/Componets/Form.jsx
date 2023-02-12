@@ -279,12 +279,16 @@ function Form() {
             headers: {
                 "Access-Control-Allow-Origin": "*",
             }}
-        ).then((res)=>{
+        ).then((res)=> {
             console.log(res.data);
             // setref(res.data);
+            // const d = res.data;
             localStorage.setItem('ref',res.data);
-            
-            window.location.href = 'http://localhost:3000/Res';
+            if(res.data === 'emptyy'){
+                console.log('hhhh');
+            }
+                
+            // window.location.href = 'http://localhost:3000/Res';
         }).catch((err)=>{
             console.log(err);
         })

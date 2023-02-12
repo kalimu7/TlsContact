@@ -1,5 +1,7 @@
 <?php
 
+    
+
     require_once '../app/core/Controller.php';
 
     header('Access-Control-Allow-Origin: *');
@@ -20,7 +22,10 @@
 
     class user extends Controller{
         public function read(){
-            
+        
+
+
+
         ini_set('display_errors', 1);
         header("Access-Control-Allow-Origin: *");
         header("Content-type: application/json; charset=utf-8");
@@ -100,8 +105,10 @@
         $model = $this->model('Users');
         // *******fetch data**********
         
-        
-        if($model->create($Firstname,$Lastname,$Dobirth,$Nationality,$Fstatus,$Address,$Vtype,$Dodeparture,$Doarrival,$Tdtype,$Tdnumber)){
+        if(empty($Firstname) || empty($Lastname) ||empty($Dobirth) ||empty($Nationality)  ){
+            echo 'emptyy'; 
+        }
+        elseif($model->create($Firstname,$Lastname,$Dobirth,$Nationality,$Fstatus,$Address,$Vtype,$Dodeparture,$Doarrival,$Tdtype,$Tdnumber)){
             $idm = $model->getmax();
             $id = $idm;
             $ref = $model->fetchrefid($id);
@@ -161,6 +168,41 @@
     }
 
     }
+    // **********real update************
+    public function modi(){
+        ini_set('display_errors', 1);
+        header('Access-Control-Allow-Origin: *');
+        header('Content-Type: application/json');
+        header('Access-Control-Allow-Methods: GET , POST , PUT , DELETE');
+        header('Access-Control-Allow-Headers: Access-Control-Allow-Headers,Content-Type,Access-Control-Allow-Headers, Authorization, X-Requested-Width');
+    
+        //traitement data
+        if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
+            if (isset($_SERVER['HTTP_ACCESS_CONTROL_REQUEST_METHOD']))
+                header("Access-Control-Allow-Methods: GET, POST, OPTIONS, PUT, DELETE");
+            if (isset($_SERVER['HTTP_ACCESS_CONTROL_REQUEST_HEADERS']))
+                header("Access-Control-Allow-Headers: {$_SERVER['HTTP_ACCESS_CONTROL_REQUEST_HEADERS']}");
+        }
+        if ($_SERVER["REQUEST_METHOD"] == "OPTIONS") {
+            return true;
+        }
+        $data = json_decode(file_get_contents("php://input"));
+        $id = $data->id;
+        $Firstname = $data->Firstname;
+        $Lastname = $data->Lastname;
+
+        
+        
+        $model = $this->model('Users');
+        if($model->modifier($Firstname,$Lastname,$id) ){
+            echo 'updated successfully';
+        }else{
+            echo 'not updated';
+        }
+
+    }
+    // **********real update************
+
     public function remove(){
         ini_set('display_errors', 1);
         // die(print('hgbk'));
