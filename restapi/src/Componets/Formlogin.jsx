@@ -1,9 +1,14 @@
 import axios from 'axios';
 import React from 'react';
-import { useState } from 'react';
+import { useState,useEffect } from 'react';
 import '../style/Formlogin.css';
 
 function Formlogin() {
+  const [reff,setreff] = useState('');
+    useEffect(()=>{
+        const r = localStorage.getItem('ref');
+        setreff(r);
+    })
   const [ref,setreference] =  useState('');
   const handlesubmit = async (event)=>{
     event.preventDefault();
@@ -14,6 +19,7 @@ function Formlogin() {
       localStorage.setItem('id',res.data.id);
       localStorage.setItem('name',res.data.Firstname);
       localStorage.setItem('lname',res.data.Lastname);
+      
       window.location.href = 'http://localhost:3000/Res';
     })
     .catch(err=>{
@@ -21,8 +27,15 @@ function Formlogin() {
     });
   }
 
+  
   return (
     <>
+        
+        
+        <div className='d-flex justify-content-center' ><span className='mx-2'>Your Reference number is </span><h5 className='text-danger'>{reff}</h5></div>
+
+
+        <p className='text-center'> Please copy it without it you cant book an appoinment</p>
         <div className=" bigtitle d-flex justify-content-center align-items-center text-center  ">
             <h2 className='text-white display-1'>Se connecter à votre compte<br /> TLScontact</h2>
         </div>

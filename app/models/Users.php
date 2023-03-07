@@ -60,18 +60,16 @@
             $num = $stm->rowCount();
             return $num;
         }
-        public function book($ddr,$ddt,$id){
+        public function book($ddr,$id){
             
             $conn = $this->connect();
-            $stm = $conn->prepare('INSERT INTO `reservation` (`datedereservation`,`iduser`,`time`) VALUES( :ddr , :id , :ddt ) ');
+            $stm = $conn->prepare('INSERT INTO `reservation` (`datedereservation`,`iduser`) VALUES( :ddr , :id  ) ');
             $stm->BindParam(':ddr',$ddr);
             $stm->BindParam(':id',$id);
-            $stm->BindParam(':ddt',$ddt);
+            // $stm->BindParam(':ddt',$ddt);
             $check = $stm->execute();
             if($check){
                 return 1;
-            }else{
-                return 2;
             }
         }
         public function getmax(){
@@ -96,7 +94,9 @@
             $stm->execute();
             $row = $stm->fetch(PDO::FETCH_ASSOC);
             return $row;
+            
         }
+        
     }
 
 ?>

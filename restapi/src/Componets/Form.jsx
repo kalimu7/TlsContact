@@ -270,11 +270,12 @@ function Form() {
     const handlechange = (event)=>{
         SetInputs({...Inputs,[event.target.name]:event.target.value })
     };
-    
+    const [empty,setempty] = useState('');
+
     const [ref,setref] = useState('');
      const handlesubmit =async (e)=>{
         e.preventDefault();
-        // console.log(Inputs);
+        
         await axios.post('http://localhost/TlsContact/public/User/add',Inputs, {
             headers: {
                 "Access-Control-Allow-Origin": "*",
@@ -284,11 +285,14 @@ function Form() {
             // setref(res.data);
             // const d = res.data;
             localStorage.setItem('ref',res.data);
-            if(res.data === 'emptyy'){
-                console.log('hhhh');
+            if(res.data.message === 'please fill out all the inputs'){
+                window.scrollTo({top: 0, left: 0, behavior: 'smooth'});
+                setempty('please fill out all the inputs');
+            }else{
+
+                window.location.href = 'http://localhost:3000/connecter';
             }
                 
-            // window.location.href = 'http://localhost:3000/Res';
         }).catch((err)=>{
             console.log(err);
         })
@@ -303,6 +307,7 @@ function Form() {
         <div className="container forcont d-flex justify-content-center align-items-center">
         <form   className='py-5'>
                 <div class="mb-3">
+                    <h5 className='text-danger' >{empty}</h5>
                     <label for="exampleInputEmail1" class="form-label">First Name</label>
                     <input onChange={handlechange} type="text" name='Firstname' class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"/>
                 </div>

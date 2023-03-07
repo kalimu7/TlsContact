@@ -106,7 +106,8 @@
         // *******fetch data**********
         
         if(empty($Firstname) || empty($Lastname) ||empty($Dobirth) ||empty($Nationality)  ){
-            echo 'emptyy'; 
+            echo json_encode(array("message" => 'please fill out all the inputs'));
+
         }
         elseif($model->create($Firstname,$Lastname,$Dobirth,$Nationality,$Fstatus,$Address,$Vtype,$Dodeparture,$Doarrival,$Tdtype,$Tdnumber)){
             $idm = $model->getmax();
@@ -235,27 +236,61 @@
         return true;
     }
         $data = json_decode(file_get_contents("php://input"));
+
         $ddr = $data->ddr;
-        $ddt = $data->ddt;
+        
         $model = $this->model('Users');
         $idm = $model->getmax();
 
         $id = $idm;
         
-        $num = $model->validate($ddr,$ddt);
+        // $num = $model->validate($ddr,$ddt);
         // $num = 0;
-        if($num<=0){
-            $model->book($ddr,$ddt,$id);
+        $check = $model->book($ddr,$id);
+        if($check == 1){
+            echo 'added successfully';
+        }
             
-            echo'booked successfully';
+            
 
-        }else{
-            echo 'this date isnt available';
+        
+            
+        }
+        public function login(){
+            ini_set('display_errors', 1);
+            header('Access-Control-Allow-Origin: *');
+            header('Content-Type: application/json');
+            header('Access-Control-Allow-Methods: GET , POST , PUT , DELETE');
+            header('Access-Control-Allow-Headers: Access-Control-Allow-Headers,Content-Type,Access-Control-Allow-Headers, Authorization, X-Requested-Width');
+
+            //traitement data
+            if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
+                if (isset($_SERVER['HTTP_ACCESS_CONTROL_REQUEST_METHOD']))
+                    header("Access-Control-Allow-Methods: GET, POST, OPTIONS, PUT, DELETE");
+                if (isset($_SERVER['HTTP_ACCESS_CONTROL_REQUEST_HEADERS']))
+                    header("Access-Control-Allow-Headers: {$_SERVER['HTTP_ACCESS_CONTROL_REQUEST_HEADERS']}");
+            }
+            if ($_SERVER["REQUEST_METHOD"] == "OPTIONS") {
+                return true;
+            }
+            $data = json_decode(file_get_contents("php://input"));
+            $refe = $data->reference;
+            $model = $this->model('Users');
+            $check = $model->readonly($refe);
+            if(!$check){
+                echo 'there is no user with this reference email';
+            }else{
+                // print_r($check);
+                echo $check['id'];
+                echo $check['Firstname'];
+                echo 'you loged in';
+            }
+
         }
            
     }
 
 
-    }
+    
 
 ?>
