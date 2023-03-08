@@ -278,12 +278,12 @@
             $model = $this->model('Users');
             $check = $model->readonly($refe);
             if(!$check){
-                echo 'there is no user with this reference email';
+                echo json_encode(array("warn" => 'there is no user with this reference email'));
             }else{
                 // print_r($check);
-                echo $check['id'];
-                echo $check['Firstname'];
-                echo 'you loged in';
+                echo json_encode(['success' => true, 'Firstname' => $check['Firstname'],'id'=>$check['id']]);
+
+
             }
 
         }

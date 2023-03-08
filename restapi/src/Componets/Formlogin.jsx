@@ -9,10 +9,12 @@ function Formlogin() {
         const r = localStorage.getItem('ref');
         setreff(r);
     })
-  const [ref,setreference] =  useState('');
+  const [noref,setnoref] = useState('');
+  
+  const [reference,setreference] =  useState('');
   const handlesubmit = async (event)=>{
     event.preventDefault();
-    await axios.post('http://localhost/TlsContact/public/User/update',{ref})
+    await axios.post('http://localhost/TlsContact/public/User/login',{reference})
      .then(res=>{
       
       console.log(res.data);
@@ -20,7 +22,14 @@ function Formlogin() {
       localStorage.setItem('name',res.data.Firstname);
       localStorage.setItem('lname',res.data.Lastname);
       
-      window.location.href = 'http://localhost:3000/Res';
+      if(res.data.warn != 'there is no user with this reference email'){
+          
+        window.location.href = 'http://localhost:3000/Res';
+      }
+      if(res.data.warn === 'there is no user with this reference email' ){
+        window.scrollTo({top: 0, left: 0, behavior: 'smooth'});
+        setnoref('there is no user with this reference number');
+      }
     })
     .catch(err=>{
       console.log(err);
@@ -33,7 +42,7 @@ function Formlogin() {
         
         
         <div className='d-flex justify-content-center' ><span className='mx-2'>Your Reference number is </span><h5 className='text-danger'>{reff}</h5></div>
-
+        <p className='text-danger text-center' >{noref}</p>
 
         <p className='text-center'> Please copy it without it you cant book an appoinment</p>
         <div className=" bigtitle d-flex justify-content-center align-items-center text-center  ">

@@ -18,10 +18,9 @@ function Reserver() {
         const fr = localStorage.getItem('name');
         setsessionid(id);
         setsessionname(fr);
-        if(!sessionid){
-            window.location.href = 'http://localhost:3000/';
-        }
+        
     })
+    
     const [ddr,SetDreservation] = useState('');
     const  handleReserver = (e)=>{
 
