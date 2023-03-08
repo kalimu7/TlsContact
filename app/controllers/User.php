@@ -287,10 +287,32 @@
             }
 
         }
+        public function dates(){
+        $model = $this->model('Users');
+        $result = $model->alldates();
+        $num = $result->rowCount();
+        if($num > 0){
+        $travel_arr = array();
+        $travel_arr['data'] = array();
+
+        while($row = $result->fetch(PDO::FETCH_ASSOC)){
+            extract($row);
+            $travel_items = array(
+                'id' => $id,
+                'datedereservation' => $datedereservation,
+                'iduser' => $iduser,
+                
+            );
+            array_push($travel_arr['data'],$travel_items);
+
+        }
+
+        echo json_encode($travel_arr);
+        }
            
     }
 
 
-    
+}
 
 ?>

@@ -96,6 +96,12 @@
             return $row;
             
         }
+        public function alldates(){
+            $conn = $this->connect();
+            $stm = $conn->prepare('SELECT * from reservation ');
+            $stm->execute();
+            return $stm;
+        }
         
     }
 

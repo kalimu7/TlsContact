@@ -50,6 +50,21 @@ function Reserver() {
         SetDreservation(timer.event.start);
     }
 
+    // ****************get booked dates**************
+    const [booked,setbooked] = useState([]);
+    useEffect(()=>{
+        axios.get('http://localhost/TlsContact/public/User/dates').then((res)=>{
+            
+            setbooked(res.data.data);
+            // console.log(res.data.data);
+        }).catch((err)=>{
+            console.log(err);
+        })
+        
+    },[])
+    const alldates = booked.map(reserv => reserv.datedereservation);
+    // console.log(alldates);
+    // ****************get booked dates**************
 
 
     const generateevent = ()=>{
@@ -80,11 +95,21 @@ function Reserver() {
             start: `${dateString}T15:30:00`,
             end: `${dateString}T16:30:00`,
         }
-        // add more events...
-      );
+
+        
+        
+        );
+        
     }
+    
     return event;
     
+    }
+    const eventRender = (info)=>{
+        const eventDate = info.event.start.toISOString().split('T')[0];
+        if(alldates.includes(eventDate)){
+            info.el.style.backgroundColor = 'red';
+        }
     }
   return (
     <div>
@@ -108,7 +133,8 @@ function Reserver() {
                     // select={handleDateSelect}
                     events={generateevent()}
                     eventClick={DE}
-                    
+                    weekends={false}
+                    eventContent={eventRender}
                 />
                 <button type='submit' className='btn btn-outline-primary my-2' onClick={handleReserver} >Reserver</button>
         </form>
