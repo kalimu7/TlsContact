@@ -46,8 +46,22 @@ function Reserver() {
     // }
 
 
+    
+    const handleDateSelect = (data) => {
+        const selectedDate = data.startStr;
+        if (alldates.includes(selectedDate)) {
+          // If the selected date is already booked, show an alert message or do nothing
+          alert('This date is already booked. Please select another date.');
+        } else {
+          // If the selected date is not booked, set it as the reservation date
+          SetDreservation(selectedDate);
+        }
+      };
+
     const DE = (timer)=>{
+        
         SetDreservation(timer.event.start);
+        console.log(timer.event.start);
     }
 
     // ****************get booked dates**************
@@ -70,7 +84,7 @@ function Reserver() {
     const generateevent = ()=>{
     const event = [];
     const startDate = new Date();
-    const endDate = new Date('2024-03-31');
+    const endDate = new Date('2023-03-31');
     for (let date = startDate; date <= endDate; date.setDate(date.getDate() + 1)) {
         const dateString = date.toISOString().split('T')[0];
 
@@ -104,12 +118,22 @@ function Reserver() {
     
     return event;
     
-    }
+}
+
     const eventRender = (info)=>{
-        const eventDate = info.event.start.toISOString().split('T')[0];
-        if(alldates.includes(eventDate)){
+        const start = info.event.start;
+        // info.start.backgroundColor='red';
+        const startTime = start.toLocaleTimeString(); // format the start time as a string
+        if (info.el) {
+            // set the background color to red
             info.el.style.backgroundColor = 'red';
-        }
+          }
+        
+
+            return (
+                <div >{startTime}</div>
+              );
+            
     }
   return (
     <div>
@@ -130,7 +154,7 @@ function Reserver() {
                     plugins={[dayGridPlugin,timeGridPlugin,interactionPlugin]}
                     initialView={"dayGridMonth"}
                     selectable={true}
-                    // select={handleDateSelect}
+                    select={handleDateSelect}
                     events={generateevent()}
                     eventClick={DE}
                     weekends={false}
