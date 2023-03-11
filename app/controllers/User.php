@@ -289,7 +289,9 @@
         }
         public function dates(){
         $model = $this->model('Users');
-        $result = $model->alldates();
+        $data = json_decode(file_get_contents("php://input"));
+        $dateday = $data->day;
+        $result = $model->alldates($dateday);
         $num = $result->rowCount();
         if($num > 0){
         $travel_arr = array();
@@ -298,16 +300,15 @@
         while($row = $result->fetch(PDO::FETCH_ASSOC)){
             extract($row);
             $travel_items = array(
-                'id' => $id,
-                'datedereservation' => $datedereservation,
-                'iduser' => $iduser,
-                
+                'time' => $time,
             );
             array_push($travel_arr['data'],$travel_items);
 
         }
 
         echo json_encode($travel_arr);
+        }else{
+            echo 'all empty'; 
         }
            
     }

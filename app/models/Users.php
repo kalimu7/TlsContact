@@ -96,11 +96,13 @@
             return $row;
             
         }
-        public function alldates(){
+        public function alldates($dateday){
             $conn = $this->connect();
-            $stm = $conn->prepare('SELECT * from reservation ');
+            $stm = $conn->prepare('SELECT   reservation.time from `reservation` WHERE reservation.datedereservation = :dataday ');
+            $stm->BindParam(':dataday',$dateday);
             $stm->execute();
             return $stm;
+            
         }
         
     }
