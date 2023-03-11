@@ -6,7 +6,7 @@ import dayGridPlugin from '@fullcalendar/daygrid' // a plugin!
 import timeGridPlugin from '@fullcalendar/timegrid' // a plugin!
 import interactionPlugin from '@fullcalendar/interaction' // a plugin!
 import { Calendar } from '@fullcalendar/core';
-
+import _ from 'lodash';
 
 
 
@@ -52,7 +52,8 @@ function Reserver() {
 
     // ****************get booked dates**************
     const [booked,setbooked] = useState([]);
-    
+    const allappoinment = ['9:15','10:15','11:15','14:15','15:15'];
+    const uniqueArray = allappoinment.filter((item) => !booked.includes(item))
     // console.log(alldates);
     // ****************set the intervall**************
     const today = new Date();
@@ -60,12 +61,20 @@ function Reserver() {
     // Calculate 3 months from today's date
     const endDate = new Date();
     endDate.setMonth(today.getMonth() + 3);
-    const handleselect = (info)=>{
+    const handleselect = async (info)=>{
         const day = info.startStr;
         console.log(day);
-        axios.post('http://localhost/TlsContact/public/User/dates',{day}).then(
+        await axios.post('http://localhost/TlsContact/public/User/dates',{day}).then(
             res=>{
-                setbooked(res.data); 
+                if(res.data.warn == 'there is no user with this reference email'){
+                    setbooked([]);
+                    console.log('gggg');
+                }else{
+                    const array =  res.data.data;
+                    const Narray = array.map(obj => obj.time)
+                    
+                    setbooked(Narray);
+                }
             }
         ).catch(
             err=>{
@@ -73,11 +82,11 @@ function Reserver() {
             }
         )
     }
-    
-
    
-
-    
+    if(!_.isEmpty(booked)){
+        console.log(booked); 
+        console.log(allappoinment);
+    }
   return (
     <div>
         
@@ -99,6 +108,20 @@ function Reserver() {
                     select={handleselect}
                     selectable={true}
                 />
+                <select value={selectedValue} onChange={handleSelectChange} id="select" className='my-2'>
+                    <option>Select your allappoinment PLease</option>
+                    {uniqueArray.map((option)=>(
+                        <option key={option}>{option}</option>
+                    ))
+                    }
+                </select>
+                {/* <select name="sl" id="select">
+                    <option value="9:15">9:15</option>
+                    <option value="9:15">10:15</option>
+                    <option value="9:15">11:15</option>
+                    <option value="9:15">14:15</option>
+                    <option value="9:15">15:15</option>
+                </select> */}
                 <button type='submit' className='btn btn-outline-primary my-2' onClick={handleReserver} >Reserver</button>
         </form>
         </div>

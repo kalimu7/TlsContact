@@ -308,7 +308,7 @@
 
         echo json_encode($travel_arr);
         }else{
-            echo 'all empty'; 
+            echo json_encode(array("warn" => 'there is no user with this reference email'));
         }
            
     }
