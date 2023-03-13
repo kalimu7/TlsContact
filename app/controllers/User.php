@@ -219,7 +219,7 @@
         }
     }
     public function reserver(){
-        ini_set('display_errors', 1);
+    ini_set('display_errors', 1);
     header('Access-Control-Allow-Origin: *');
     header('Content-Type: application/json');
     header('Access-Control-Allow-Methods: GET , POST , PUT , DELETE');
@@ -236,25 +236,17 @@
         return true;
     }
         $data = json_decode(file_get_contents("php://input"));
-
-        $ddr = $data->ddr;
-        
+        $Day = $data->Day;
+        $Minit = $data->Minit;
+        $idU = $data->idU;
         $model = $this->model('Users');
-        $idm = $model->getmax();
-
-        $id = $idm;
         
-        // $num = $model->validate($ddr,$ddt);
-        // $num = 0;
-        $check = $model->book($ddr,$id);
+        
+        $check = $model->book($Day,$Minit,$idU);
         if($check == 1){
             echo 'added successfully';
         }
-            
-            
-
-        
-            
+                
         }
         public function login(){
             ini_set('display_errors', 1);
@@ -305,12 +297,25 @@
             array_push($travel_arr['data'],$travel_items);
 
         }
-
         echo json_encode($travel_arr);
         }else{
             echo json_encode(array("warn" => 'there is no user with this reference email'));
         }
            
+    }
+    public function checkRese(){
+        $data = json_decode(file_get_contents("php://input"));
+        $iduser = $data->idU;
+        $model = $this->model('Users');
+        $datachek = $model->checkReserve($iduser);
+        if(empty($datachek)){
+            echo json_encode([ 'alreadyreserved' => false, 'warning' => 'empty' ]);
+            exit;
+        }
+        echo json_encode(['alreadyreserved' => true, 'time' => $datachek['time'],'datedereservation'=>$datachek['datedereservation']]);
+    }
+    public function book(){
+
     }
 
 

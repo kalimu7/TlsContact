@@ -60,12 +60,13 @@
             $num = $stm->rowCount();
             return $num;
         }
-        public function book($ddr,$id){
+        public function book($Day,$Minit,$idU){
             
             $conn = $this->connect();
-            $stm = $conn->prepare('INSERT INTO `reservation` (`datedereservation`,`iduser`) VALUES( :ddr , :id  ) ');
-            $stm->BindParam(':ddr',$ddr);
-            $stm->BindParam(':id',$id);
+            $stm = $conn->prepare('INSERT INTO `reservation` (`datedereservation`,`iduser`,`time`) VALUES( :day , :iduser , :minit ) ');
+            $stm->BindParam(':day',$Day);
+            $stm->BindParam(':minit',$Minit);
+            $stm->BindParam(':iduser',$idU);
             // $stm->BindParam(':ddt',$ddt);
             $check = $stm->execute();
             if($check){
@@ -98,11 +99,18 @@
         }
         public function alldates($dateday){
             $conn = $this->connect();
-            $stm = $conn->prepare('SELECT   reservation.time from `reservation` WHERE reservation.datedereservation = :dataday ');
+            $stm = $conn->prepare('SELECT  reservation.time from `reservation` WHERE reservation.datedereservation = :dataday ');
             $stm->BindParam(':dataday',$dateday);
             $stm->execute();
             return $stm;
-            
+        }
+        public function checkReserve($iduser){
+            $conn = $this->connect();
+            $stm = $conn->prepare('SELECT   reservation.time,reservation.datedereservation from `reservation` WHERE reservation.iduser = :idU ');
+            $stm->BindParam(':idU',$iduser);
+            $stm->execute();
+            $row = $stm->fetch(PDO::FETCH_ASSOC);
+            return $row;
         }
         
     }

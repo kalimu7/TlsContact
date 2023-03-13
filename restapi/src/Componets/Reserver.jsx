@@ -11,22 +11,50 @@ import _ from 'lodash';
 
 
 function Reserver() {
-    const [sessionid,setsessionid] = useState('');
+    const [Day,setDay] = useState('');
+    const [Minit,setMinit] = useState('');
+    const [idU,setsessionid] = useState('');
     const [sessionname,setsessionname] = useState('');
+    const [alreadybooked,setalreadybooked] = useState({});
     useEffect(()=>{
-        const id = localStorage.getItem('id');
+        const idU = localStorage.getItem('id');
         const fr = localStorage.getItem('name');
-        setsessionid(id);
+        setsessionid(idU);
         setsessionname(fr);
-        
-    })
+        axios.post('http://localhost/TlsContact/public/User/checkRese',{idU}).then(
     
+            res=>{
+            console.log(idU);
+            // console.log(res.data);
+            setalreadybooked(res.data);
+            }
+            ).catch(err=>console.log(err))
+    },[])
+   
+    const handleChange = (event)=>{
+        setMinit(event.target.value);
+        // console.log(event.target.value);
+    }
+    
+    
+    if(!_.isEmpty(alreadybooked)){
+        if(alreadybooked.alreadyreserved===false){
+            console.log(alreadybooked);
+            console.log('keep bieng here to book');
+        }else{
+            console.log('You already booked');
+            // console.log(alreadybooked.datedereservation);
+            // console.log(alreadybooked.time);
+        }
+    }
     const [ddr,SetDreservation] = useState('');
     const  handleReserver = (e)=>{
-
         e.preventDefault();
+        console.log('data ready to push');
+        console.log(Day);
+        console.log(Minit);
         
-        axios.post('http://localhost/TlsContact/public/User/reserver',{ddr}).then(
+        axios.post('http://localhost/TlsContact/public/User/reserver',{Day,Minit,idU}).then(
             
             (res)=>{
                 console.log(res);
@@ -63,6 +91,7 @@ function Reserver() {
     endDate.setMonth(today.getMonth() + 3);
     const handleselect = async (info)=>{
         const day = info.startStr;
+        setDay(day);
         console.log(day);
         await axios.post('http://localhost/TlsContact/public/User/dates',{day}).then(
             res=>{
@@ -72,7 +101,6 @@ function Reserver() {
                 }else{
                     const array =  res.data.data;
                     const Narray = array.map(obj => obj.time)
-                    
                     setbooked(Narray);
                 }
             }
@@ -83,10 +111,10 @@ function Reserver() {
         )
     }
    
-    if(!_.isEmpty(booked)){
-        console.log(booked); 
-        console.log(allappoinment);
-    }
+    // if(!_.isEmpty(booked)){
+    //     console.log(booked); 
+    //     console.log(allappoinment); 
+    // }
   return (
     <div>
         
@@ -97,7 +125,8 @@ function Reserver() {
                 
         </div>
         <div className="container forcontt d-flex justify-content-center align-items-center">
-        <form   className='py-5' style={{width:'400px'}} >
+        
+                <form   className='py-5' style={{width:'400px'}} >
             <div className='text-center'>
 
         <span className='mx-2'>welcome </span><h3 className='text-danger d-inline'>{sessionname}</h3><span className='mx-2'>make your reservation</span>
@@ -108,22 +137,17 @@ function Reserver() {
                     select={handleselect}
                     selectable={true}
                 />
-                <select value={selectedValue} onChange={handleSelectChange} id="select" className='my-2'>
-                    <option>Select your allappoinment PLease</option>
+                <select  id="select" className='my-2' value={Minit} onChange={handleChange}>
+                    <option value="">Select your allappoinment PLease</option>
                     {uniqueArray.map((option)=>(
-                        <option key={option}>{option}</option>
+                        <option value={option} key={option}>{option}</option>
                     ))
                     }
                 </select>
-                {/* <select name="sl" id="select">
-                    <option value="9:15">9:15</option>
-                    <option value="9:15">10:15</option>
-                    <option value="9:15">11:15</option>
-                    <option value="9:15">14:15</option>
-                    <option value="9:15">15:15</option>
-                </select> */}
+                
                 <button type='submit' className='btn btn-outline-primary my-2' onClick={handleReserver} >Reserver</button>
-        </form>
+                </form>
+           
         </div>
 
     </div>
