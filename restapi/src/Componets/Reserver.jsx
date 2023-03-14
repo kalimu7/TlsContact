@@ -43,13 +43,14 @@ function Reserver() {
             console.log('keep bieng here to book');
         }else{
             console.log('You already booked');
-            // console.log(alreadybooked.datedereservation);
-            // console.log(alreadybooked.time);
+            console.log(alreadybooked.datedereservation);
+            console.log(alreadybooked.time);
+           
         }
     }
     const [ddr,SetDreservation] = useState('');
     const  handleReserver = (e)=>{
-        e.preventDefault();
+        // e.preventDefault();
         console.log('data ready to push');
         console.log(Day);
         console.log(Minit);
@@ -146,8 +147,15 @@ function Reserver() {
                 </select>
                 
                 <button type='submit' className='btn btn-outline-primary my-2' onClick={handleReserver} >Reserver</button>
+                <div className="">
+                    <p className='bg-primary text-white p-2'>
+                        Your booked the {alreadybooked.datedereservation} at {alreadybooked.time}
+                    </p>
+                </div>
                 </form>
-           
+                <div>
+
+                </div>
         </div>
 
     </div>
