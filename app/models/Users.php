@@ -112,6 +112,14 @@
             $row = $stm->fetch(PDO::FETCH_ASSOC);
             return $row;
         }
+        public function CheckRes($iduser){
+            $conn = $this->connect();
+            $stm = $conn->prepare('SELECT   * from `reservation` WHERE reservation.iduser = :idU ');
+            $stm->BindParam(':idU',$iduser);
+            $stm->execute();
+            $row = $stm->fetch(PDO::FETCH_ASSOC);
+            return $row;
+        }
         
     }
 

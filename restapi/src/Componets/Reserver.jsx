@@ -11,6 +11,7 @@ import _ from 'lodash';
 
 
 function Reserver() {
+    
     const [Day,setDay] = useState('');
     const [Minit,setMinit] = useState('');
     const [idU,setsessionid] = useState('');
@@ -35,22 +36,22 @@ function Reserver() {
         setMinit(event.target.value);
         // console.log(event.target.value);
     }
-    
-    
-    if(!_.isEmpty(alreadybooked)){
-        if(alreadybooked.alreadyreserved===false){
-            console.log(alreadybooked);
-            console.log('keep bieng here to book');
-        }else{
-            console.log('You already booked');
-            console.log(alreadybooked.datedereservation);
-            console.log(alreadybooked.time);
-           
+    useEffect(()=>{
+        if(!_.isEmpty(alreadybooked)){
+            if(alreadybooked.alreadyreserved===false){
+                console.log(alreadybooked);
+                console.log('keep bieng here to book');
+            }else{
+                console.log('You already booked');
+                console.log(alreadybooked.datedereservation);
+                console.log(alreadybooked.time);
+                
+            }
         }
-    }
+    },[])
     const [ddr,SetDreservation] = useState('');
     const  handleReserver = (e)=>{
-        // e.preventDefault();
+        e.preventDefault();
         console.log('data ready to push');
         console.log(Day);
         console.log(Minit);
@@ -65,7 +66,6 @@ function Reserver() {
                 console.log(err);
             }
         )
-        
     }
     
 
@@ -118,27 +118,32 @@ function Reserver() {
     // }
   return (
     <div>
-        
+        <div className='text-end mx-5 my-1'>
+            <a href="/user" className='btn btn-primary'>Profile</a>
+        </div>
         <div className="bigtittle d-flex justify-content-center align-items-center text-center  ">
-
+                    
                     <h2 className='text-white display-1'> réserver votre rendez-vous<br /> TLScontact</h2> 
+                    
                     
                 
         </div>
         <div className="container forcontt d-flex justify-content-center align-items-center">
         
-                <form   className='py-5' style={{width:'400px'}} >
-            <div className='text-center'>
-
-        <span className='mx-2'>welcome </span><h3 className='text-danger d-inline'>{sessionname}</h3><span className='mx-2'>make your reservation</span>
-            </div>
+                <form   className='py-5' style={{width:'400px'}}  >
+                   
+                    
+                     <div className='text-center'>
+                        <span className='mx-2'>welcome </span><h3 className='text-danger d-inline'>{sessionname}</h3><span className='mx-2'>make your reservation</span>
+                    </div>
                 <FullCalendar
                     plugins={[ dayGridPlugin, timeGridPlugin, interactionPlugin ]}
                     initialView="dayGridMonth"
                     select={handleselect}
                     selectable={true}
+                   
                 />
-                <select  id="select" className='my-2' value={Minit} onChange={handleChange}>
+                <select  id="select" className='my-2' value={Minit} onChange={handleChange}  >
                     <option value="">Select your allappoinment PLease</option>
                     {uniqueArray.map((option)=>(
                         <option value={option} key={option}>{option}</option>
@@ -153,9 +158,7 @@ function Reserver() {
                     </p>
                 </div>
                 </form>
-                <div>
-
-                </div>
+                
         </div>
 
     </div>

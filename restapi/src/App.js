@@ -13,7 +13,7 @@ function App() {
       <div className="App">
         <Routes>
           
-          <Route path='/Res' element={<Reserver />} />
+          <Route path='/Res' element={<Reserver />}  />
           <Route path='/connecter' element={<Formlogin />} />
           <Route path="/"  element={<Body />} />
           <Route path="/enregistrer"  element={<Form />} />

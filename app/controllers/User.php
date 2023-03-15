@@ -240,7 +240,12 @@
         $Minit = $data->Minit;
         $idU = $data->idU;
         $model = $this->model('Users');
-        
+        //AB stand for already booked;
+        $AB = $model->CheckRes($idU);
+        if(!empty($AB['id'])){
+            echo json_encode(array("errr" => 'this user already bookde'));
+            exit;
+        }
         
         $check = $model->book($Day,$Minit,$idU);
         if($check == 1){

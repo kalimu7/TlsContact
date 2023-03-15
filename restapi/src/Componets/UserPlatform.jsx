@@ -7,10 +7,12 @@ function UserPlatform() {
     const [Firstname,setdata] = useState('');
     const [Lastname,setlname] = useState('');
     const [id,setid] = useState('');
+    const [ref,setrefe] = useState('');
     useEffect(()=>{
         setdata(localStorage.getItem('name'));
         setlname(localStorage.getItem('lname'));
         setid(localStorage.getItem('id'));
+        setrefe(localStorage.getItem('ref'));
     },[])
     const [dt,setdt] = useState({Firstname:'',Lastname:''});
     
@@ -23,10 +25,14 @@ function UserPlatform() {
         .catch(err=>console.log(err))
         
     }
+    useEffect(()=>{
+        
+        axios.get(`http://localhost/TlsContact/public/User/update/${ref}`).then(res=>{console.log(res)}).catch(err=>console.log(err))
+        
+    })
   return (
     <div className='contentuser'>
         <div className='  '>
-            <h2 className='pt-5'>Welcome Back  {Firstname},{Lastname} </h2>
             <p>
             <Link className='text-danger' to="">Edit profile</Link> <br />
             <Link className='text-success' to="">delete profile</Link>
@@ -36,6 +42,7 @@ function UserPlatform() {
         
         <form   className='py-5'>
                 <div class="mb-3">
+                    {id}
                     <label for="exampleInputEmail1" class="form-label">First Name</label>
                     <input onChange={e=>setdata(e.target.value)} value={Firstname} type="text" name='Firstname' class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"/>
                 </div>
