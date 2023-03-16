@@ -120,7 +120,10 @@
 
     }
     
-    public function update(){
+    public function update($ref){
+        $refe = ltrim($ref);
+        // echo $refe;
+        // die;
         ini_set('display_errors', 1);
         header('Access-Control-Allow-Origin: *');
         header('Content-Type: application/json');
@@ -137,22 +140,26 @@
         if ($_SERVER["REQUEST_METHOD"] == "OPTIONS") {
             return true;
         }
-    $data = json_decode(file_get_contents("php://input"));
-    $ref = $data->ref;
+    // $data = json_decode(file_get_contents("php://input"));
+    // $ref = $data->ref;
+    
     $model = $this->model('Users');
-    $row = $model->readonly($ref);
+    $row = $model->readonly($refe);
+    // print_r($row);
+    // die;
     extract($row);
     $travel_items = array(
                 'id' => $id,
                 'Firstname' => $Firstname,
                 'Lastname' => $Lastname,
+                'nationality'=> $nationality,
                 //dateofbirth`, `nationality`, `family status`, `address`, `visatype`,`Dateofdeparture`, `Date of arrival`, `traveldocumenttype`, `traveldocumentnumber`, `Referencenumber
                 'dateofbirth'=>$dateofbirth,
-                'family status'=>$familystatus,
+                'familystatus'=>$familystatus,
                 'address'=>$address,
                 'visatype'=>$visatype,
                 'Dateofdeparture'=>$Dateofdeparture,
-                'Date of arrival'=>$Dateofarrival,
+                'Dateofarrival'=>$Dateofarrival,
                 'traveldocumenttype'=>$traveldocumenttype,
                 'traveldocumentnumber'=>$traveldocumentnumber,
                 'Referencenumber'=>$Referencenumber
@@ -191,11 +198,18 @@
         $id = $data->id;
         $Firstname = $data->Firstname;
         $Lastname = $data->Lastname;
-
-        
+        $Dobirth = $data->dateofbirth;
+        $Nationality = $data->nationality;
+        $Fstatus = $data->familystatus;
+        $Address = $data->address;
+        $Vtype = $data->visatype;
+        $Dodeparture = $data->Dateofdeparture;
+        $Doarrival = $data->Dateofarrival;
+        $Tdtype = $data->traveldocumenttype;
+        $Tdnumber = $data->traveldocumentnumber;
         
         $model = $this->model('Users');
-        if($model->modifier($Firstname,$Lastname,$id) ){
+        if($model->modifier($Firstname,$Lastname,$id,$Dobirth,$Nationality,$Fstatus,$Address,$Vtype,$Dodeparture,$Doarrival,$Tdtype,$Tdnumber) ){
             echo 'updated successfully';
         }else{
             echo 'not updated';
@@ -279,8 +293,6 @@
             }else{
                 // print_r($check);
                 echo json_encode(['success' => true, 'Firstname' => $check['Firstname'],'id'=>$check['id']]);
-
-
             }
 
         }

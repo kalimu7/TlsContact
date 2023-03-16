@@ -33,12 +33,21 @@
             return true;
         }
         
-        public function modifier($Firstname,$Lastname,$id){
+        public function modifier($Firstname,$Lastname,$id,$Dobirth,$Nationality,$Fstatus,$Address,$Vtype,$Dodeparture,$Doarrival,$Tdtype,$Tdnumber){
             $conn = $this->connect();
-            $stm = $conn->prepare('UPDATE `user` SET `Firstname` = :Fn ,`Lastname`= :Ln WHERE id = :idd');
+            $stm = $conn->prepare('UPDATE `user` SET `Firstname` = :Fn ,`Lastname`= :Ln ,`dateofbirth`= :dobirth ,`nationality`= :nationality ,`familystatus`=  :fstatus ,`address`= :address, `visatype`= :vtype  ,`Dateofdeparture`= :dodeparture,`Dateofarrival`= :doarrival ,`traveldocumenttype`= :tdtype ,`traveldocumentnumber`= :tdnumber WHERE id    = :idd');
             $stm->BindParam(':Fn',$Firstname);
             $stm->BindParam(':Ln',$Lastname);
             $stm->BindParam(':idd',$id);
+            $stm->BindParam(':dobirth',$Dobirth);
+            $stm->BindParam(':nationality',$Nationality);
+            $stm->BindParam(':fstatus',$Fstatus);
+            $stm->BindParam(':address',$Address);
+            $stm->BindParam(':vtype',$Vtype);
+            $stm->BindParam(':dodeparture',$Dodeparture);
+            $stm->BindParam(':doarrival',$Doarrival);
+            $stm->BindParam(':tdtype',$Tdtype);
+            $stm->BindParam(':tdnumber',$Tdnumber);
             $stm->execute();
             return true;
         }

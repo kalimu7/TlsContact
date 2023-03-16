@@ -18,6 +18,7 @@ function Formlogin() {
      .then(res=>{
       
       console.log(res.data);
+      localStorage.setItem('ref',reference);
       localStorage.setItem('id',res.data.id);
       localStorage.setItem('name',res.data.Firstname);
       localStorage.setItem('lname',res.data.Lastname);

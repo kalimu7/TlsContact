@@ -289,7 +289,6 @@ function Form() {
                 window.scrollTo({top: 0, left: 0, behavior: 'smooth'});
                 setempty('please fill out all the inputs');
             }else{
-
                 window.location.href = 'http://localhost:3000/connecter';
             }
                 
