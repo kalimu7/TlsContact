@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { Link } from 'react-router-dom';
 import React, { useEffect, useState, useRef } from 'react'
 import '../style/Reserver.css';
 import FullCalendar from '@fullcalendar/react' // must go before plugins
@@ -11,7 +12,7 @@ import _ from 'lodash';
 
 
 function Reserver() {
-    
+    const [Display,SetDisplay] = useState('');
     const [Day,setDay] = useState('');
     const [Minit,setMinit] = useState('');
     const [idU,setsessionid] = useState('');
@@ -111,6 +112,9 @@ function Reserver() {
             }
         )
     }
+    if(alreadybooked.alreadyreserved){
+        console.log(alreadybooked);
+    }
    
     // if(!_.isEmpty(booked)){
     //     console.log(booked); 
@@ -152,6 +156,10 @@ function Reserver() {
                 </select>
                 
                 <button type='submit' className='btn btn-outline-primary my-2' onClick={handleReserver} >Reserver</button>
+                {alreadybooked.alreadyreserved ? (
+                    <Link to={`http://localhost/TlsContact/public/User/Cancel/${idU}`} className='btn btn-outline-danger my-2 d-block ml-5'  >Cancel</Link>
+                ): ("")}
+                
                 <div className="">
                     <p className='bg-primary text-white p-2'>
                         Your booked the {alreadybooked.datedereservation} at {alreadybooked.time}

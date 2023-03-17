@@ -129,6 +129,13 @@
             $row = $stm->fetch(PDO::FETCH_ASSOC);
             return $row;
         }
+        public function Canceled($iduser){
+            $conn = $this->connect();
+            $stm = $conn->prepare('DELETE FROM `reservation` WHERE iduser = :idd ');
+            $stm->BindParam(':idd',$iduser);
+            $stm->execute();
+            return true;
+        }
         
     }
 

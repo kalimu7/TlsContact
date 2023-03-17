@@ -210,7 +210,7 @@
         
         $model = $this->model('Users');
         if($model->modifier($Firstname,$Lastname,$id,$Dobirth,$Nationality,$Fstatus,$Address,$Vtype,$Dodeparture,$Doarrival,$Tdtype,$Tdnumber) ){
-            echo 'updated successfully';
+            echo json_encode(array("upd" => 'updated successfully'));
         }else{
             echo 'not updated';
         }
@@ -218,18 +218,19 @@
     }
     // **********real update************
 
-    public function remove(){
+    public function remove($id){
         ini_set('display_errors', 1);
         // die(print('hgbk'));
         header("Access-Control-Allow-Origin: *");
         header("Content-type: application/json; charset=utf-8");
         header("Access-Control-Allow-Methods:PUT");
         header("Access-Control-Allow-Headers:Access-Control-Allow-Origin,Content-type: application/json;    charset=utf-8,Access-Control-Allow-Methods,Authorization,X-Requested-With");
-        $data = json_decode(file_get_contents("php://input"));
-        $id = $data->id;
+        // $data = json_decode(file_get_contents("php://input"));
+        // $id = $data->id;
         $model = $this->model('Users');
         if($model->delete($id)){
             echo 'deleted successfully';
+            header("Location:http://localhost:3000/user");
         }
     }
     public function reserver(){
@@ -331,8 +332,12 @@
         }
         echo json_encode(['alreadyreserved' => true, 'time' => $datachek['time'],'datedereservation'=>$datachek['datedereservation']]);
     }
-    public function book(){
-
+    public function Cancel($iduser){
+        $model = $this->model('Users');
+        if($model->Canceled($iduser)){
+            header("Location:http://localhost:3000/Res");
+            echo 'deleted successfully';
+        }
     }
 
 

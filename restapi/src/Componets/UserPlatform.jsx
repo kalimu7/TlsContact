@@ -4,7 +4,7 @@ import * as Icon from 'react-bootstrap-icons';
 import '../style/Userplatform.css';
 import axios from 'axios';
 function UserPlatform() {
-
+    const [notification,setnotification] = useState(''); 
     const [Firstname, setdata] = useState('');
     // const [Lastname,setlname] = useState('');
     const [id, setid] = useState('');
@@ -21,11 +21,17 @@ function UserPlatform() {
     const handlesubmit = (e) => {
         // console.log(Data)
         e.preventDefault();
-        console.log(Data);
+        // console.log(Data);
         
         axios.post('http://localhost/TlsContact/public/User/modi',Data).
         then(
-            res=>console.log(res)
+            (res)=>{console.log(res.data);
+            if(res.data.upd === 'updated successfully'){
+                setnotification('updated successfully');
+            }else{
+                setnotification('not updated');
+            }
+        }
         )
         .catch(
             err=>console.log(err)
@@ -323,7 +329,7 @@ function UserPlatform() {
 
                 <form className='py-5'>
 
-
+                    <span className='text-success' >{notification}</span>
                     <div class="mb-3">
                         <h5 className='text-danger' ></h5>
                         <label for="exampleInputEmail1" class="form-label">First Name</label>
@@ -387,6 +393,7 @@ function UserPlatform() {
                     </div>
                     <div className='d-flex justify-content-center'>
                         <button type="submit" class="btn btn-primary rounded-pill px-5 py-2" onClick={handlesubmit} > Submit</button>
+                        <Link to={`http://localhost/TlsContact/public/User/remove/${Data.id}`} className="btn btn-danger rounded-pill px-5 py-2">Delete</Link>
                     </div>
                 </form>
             </div>
